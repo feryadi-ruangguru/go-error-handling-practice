@@ -12,7 +12,7 @@ import (
 
 func HandleIfGetAccountError(ctx *gin.Context, err error) bool {
 	if err != nil {
-		if errors.Is(errorutil.EntityNotFoundError, errors.Unwrap(err)) {
+		if errors.Is(err, errorutil.EntityNotFoundError) {
 			ctx.JSON(http.StatusNotFound, ResponseError(err.Error()))
 			return true
 		}
@@ -24,7 +24,7 @@ func HandleIfGetAccountError(ctx *gin.Context, err error) bool {
 
 func HandleIfTopUpError(ctx *gin.Context, err error) bool {
 	if err != nil {
-		if errors.Is(errorutil.EntityNotFoundError, errors.Unwrap(err)) {
+		if errors.Is(err, errorutil.EntityNotFoundError) {
 			ctx.JSON(http.StatusNotFound, ResponseError(err.Error()))
 			return true
 		}
@@ -37,11 +37,11 @@ func HandleIfTopUpError(ctx *gin.Context, err error) bool {
 func HandleIfTransferError(ctx *gin.Context, err error) bool {
 	if err != nil {
 		fmt.Println(err)
-		if errors.Is(errorutil.EntityNotFoundError, errors.Unwrap(err)) {
+		if errors.Is(err, errorutil.EntityNotFoundError) {
 			ctx.JSON(http.StatusNotFound, ResponseError(err.Error()))
 			return true
 		}
-		if errors.Is(errorutil.BalanceInsufficientError, err) {
+		if errors.Is(err, errorutil.BalanceInsufficientError) {
 			ctx.JSON(http.StatusBadRequest, ResponseError(err.Error()))
 			return true
 		}
