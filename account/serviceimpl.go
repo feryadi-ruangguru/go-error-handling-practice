@@ -29,7 +29,7 @@ func (service *ServiceImpl) GetAccount(request GetAccountRequest) (response GetA
 func (service *ServiceImpl) TopUp(request TopUpRequest) (response TopUpResponse, err error) {
 	account, err := service.repository.FindByAccountNumber(request.AccountNumber)
 	if err != nil {
-		return response, fmt.Errorf("action=service.repository.FindByAccountNumber accountNumber=%service err=%w",
+		return response, fmt.Errorf("action=service.repository.FindByAccountNumber accountNumber=%s err=%w",
 			request.AccountNumber, err)
 	}
 
@@ -50,7 +50,7 @@ func (service *ServiceImpl) TopUp(request TopUpRequest) (response TopUpResponse,
 func (service *ServiceImpl) Transfer(request TransferRequest) (response TransferResponse, err error) {
 	sourceAccount, err := service.repository.FindByAccountNumber(request.SourceAccountNumber)
 	if err != nil {
-		return response, fmt.Errorf("action=service.repository.FindByAccountNumber sourceAccountNumber=%service err=%w",
+		return response, fmt.Errorf("action=service.repository.FindByAccountNumber sourceAccountNumber=%s err=%w",
 			request.SourceAccountNumber, err)
 	}
 
@@ -60,7 +60,7 @@ func (service *ServiceImpl) Transfer(request TransferRequest) (response Transfer
 
 	destinationAccount, err := service.repository.FindByAccountNumber(request.DestinationAccountNumber)
 	if err != nil {
-		return response, fmt.Errorf("action=service.repository.FindByAccountNumber destinationAccountNumber=%service err=%w",
+		return response, fmt.Errorf("action=service.repository.FindByAccountNumber destinationAccountNumber=%s err=%w",
 			request.DestinationAccountNumber, err)
 	}
 
@@ -69,12 +69,12 @@ func (service *ServiceImpl) Transfer(request TransferRequest) (response Transfer
 
 	err = service.repository.Save(sourceAccount)
 	if err != nil {
-		return response, fmt.Errorf("action=.repository.Save sourceAccount err=%w", err)
+		return response, fmt.Errorf("action=service.repository.Save sourceAccount err=%w", err)
 	}
 
 	err = service.repository.Save(destinationAccount)
 	if err != nil {
-		return response, fmt.Errorf("action=.repository.Save destinationAccount err=%w", err)
+		return response, fmt.Errorf("action=service.repository.Save destinationAccount err=%w", err)
 	}
 
 	response.SourceAccountNumber = request.SourceAccountNumber
