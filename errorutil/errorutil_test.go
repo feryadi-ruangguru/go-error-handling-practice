@@ -27,18 +27,14 @@ func TestUnwrap(t *testing.T) {
 
 func TestUnwrap2(t *testing.T) {
 	err := SampleValueError
-	assert.Equal(t, errors.New("sample error"), err)
+	assert.Equal(t, err, errors.New("sample value error"))
 
-	err = fmt.Errorf("%w", err)
-
-	assert.Equal(t, "sample error", err.Error())
-	assert.Error(t, err)
-	fmt.Println(err)
+	err = fmt.Errorf("action=some action err=%w", err)
 
 	err = errors.Unwrap(err)
+
 	assert.Error(t, err)
 	assert.ErrorIs(t, err, SampleValueError)
-	assert.Equal(t, "sample error", err.Error())
 }
 
 func TestErrorsIsMultipleWrapError(t *testing.T) {
